@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>newsroom</title>
+        <link rel="stylesheet" href="../static/styles.css">
+        <link rel="shortcut icon" type="image/jpg" href="../static/news.png"/>
+    </head>
+    <body>
+        <div id="header-wrapper">
+            <div id="header">auto newsroom</div>
+        </div>
+        <div id="instructions-wrapper">
+            <div id="instructions-title">instructions</div>
+            <ol id="instructions-text">
+                <li>input links into the text box</li>
+                <li>make sure they are seperated by lines</li>
+                <li>press submit!</li>
+            </ol>
+        </div>
+        <div id="input-wrapper">
+            <form method="post" id="content-form">
+                <textarea type="text" name="content" id="content"></textarea>
+                <br />
+                <div id="button-wrapper">
+                    <a href="#result"><button type="submit" id="submit-button">submit</button></a> 
+                    <div id="load">
+                        <img id="loading" src="../static/21.gif" alt="loading" />
+                    </div>
+                </div>
+            </form>
+
+            <div id="seperator"></div>
+
+            <ul id="result"></ul>
+
+            <a href="#" onclick="CopyToClipboard('result');return false;"><div id="copy" class="hidden">copy</div></a>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            function CopyToClipboard(id)
+            {
+                var r = document.createRange();
+                r.selectNode(document.getElementById(id));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(r);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+            }
+            $(document).on('submit','#content-form',function(e)
+            {
+                $("#result").empty();
+                $("#loading").toggle();
+                if($("#seperator").is(":visible")) {
+                    $("#seperator").toggle();
+                    $("#copy").css('display', 'none');
+                }
+                e.preventDefault();
+                $.ajax({
+                    type:'POST',
+                    url:'/',
+                    data:{
+                    content:$("#content").val()
+                    },
+                    success:function(response)
+                    {
+                        $("#seperator").toggle();
+                        console.log("why not working");
+                        console.log(response["content"]);
+                        console.log(response["content"].length);
+                        for (var i = 0; i < response["content"].length; i++) {
+                            $("#result").append("<li>" + response["content"][i] + "</li>");
+                        }
+
+                        $("#loading").toggle();
+                        $("#copy").css('display', 'flex');
+
+                        if (this.hash !== "") {
+
+                            $('html, body').animate({
+                                scrollTop: $("#seperator").offset().top
+                            }, 600, function(){
+
+
+                            });
+                        }
+                    }
+                })
+            });
+        </script>
+    
+    </body>
+</html>

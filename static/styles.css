@@ -1,0 +1,107 @@
+html {
+    scroll-behavior: smooth;
+  }
+
+a {
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header {
+    font-size: 42px;
+    color: #eeeeee;
+    font-weight: bold;
+}
+#header-wrapper {
+    padding: 30px;
+    height: 30px;
+    background-color: #1A1C1A;
+    display: flex;
+    align-items: center;
+}
+
+#instructions-wrapper {
+    padding: 15px 30px 15px 30px;
+    background-color: #eeeedd;
+}
+#instructions-wrapper ol {
+    margin: 0;
+    margin-top: 8px;
+}
+#instructions-text {
+    font-size: 16px;
+    color: #1A1C1A;
+}
+#instructions-title {
+    font-weight: 600;
+    font-size: 21px;
+}
+
+#input-wrapper {
+    padding: 0px 30px 20px 30px;
+    background-color: #eeeedd;
+}
+#content {
+    padding: 20px;
+    width: 75%;
+    height: 275px;
+}
+#button-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+#submit-button {
+    margin-top: 20px;
+    background-color: #1A1C1A;  
+    border: none;
+    cursor: pointer;
+    color: #eeeedd;
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 600;
+}
+#load {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    margin-left: 14px;
+}
+#load img {
+    height: 20px;
+    display: none;
+}
+
+#seperator {
+    height: 4px;
+    width: 75%;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #1A1C1A;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: none;
+}
+#copy {
+    margin-top: 20px;
+    background-color: #1A1C1A;  
+    border: none;
+    cursor: pointer;
+    color: #eeeedd;
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+#result {
+    max-width: 75%;
+}
