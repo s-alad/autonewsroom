@@ -59,7 +59,7 @@ def shorten(url):
     return response.json()['id']
 
 def analyze(url):
-    article = Article(url)
+    article = Article(url.strip())
     article.download()
     article.parse()
     return article
@@ -78,20 +78,32 @@ app = Flask(__name__)
 def index():
     if request.method == "POST":
         content = request.form.get('content')
+        print(content)
         return jsonify({"content": main(content)})
     return render_template('index.html')
 
 
 def main(links):
+    print(links)
     urls = links.splitlines()
+    print(urls)
     new = []
 
     for url in urls:
+        print("pass=================================================")
+        print(url)
+        print(url.strip())
+        url = url.strip()
         bitly  = shorten(url)
         outlet = source(url)
-        title = analyze(url).title
+        try:
+            title = analyze(url.strip()).title
+        except: 
+            title = "[failed to fetch title]"
+        print(title)
 
         new.append((outlet+": "+ title+ " https://"+bitly))
+        print(new)
 
     return new
 
