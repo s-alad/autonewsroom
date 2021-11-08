@@ -62,6 +62,8 @@ def analyze(url):
     article = Article(url.strip())
     article.download()
     article.parse()
+    if ("bloomberg.com/" in url):
+        return Exception
     return article
 
 def source(url):
