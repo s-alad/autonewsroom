@@ -1,1 +1,1 @@
-web: gunicorn app:newsroom
+web:gunicorn newsroom:app
