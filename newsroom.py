@@ -5,7 +5,7 @@ import json
 from flask import Flask, render_template, request, jsonify
 from newspaper import *
 
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0' 
+USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36' 
 config = Config()
 config.browser_user_agent = USER_AGENT
 config.headers = {
