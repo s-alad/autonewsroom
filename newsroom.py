@@ -5,7 +5,21 @@ import json
 from flask import Flask, render_template, request, jsonify
 from newspaper import *
 
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0' 
+config = Config()
+config.browser_user_agent = USER_AGENT
+config.headers = {
+    'User-Agent': USER_AGENT,
+    'Accept': 'Accept : text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'de,en-US;q=0.7,en;q=0.3',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'DNT': '1',
+    'TE': 'Trailers'
+}
+config.request_timeout = 10
+
 outlets = {
+    "PR Newswire": "prnewswire.com/",
     "Yahoo": "yahoo.com/",
     "Axios": "axios.com/",
     "Bloomberg": "bloomberg.com/",
@@ -41,7 +55,17 @@ outlets = {
     "USA Today": "usatoday.com/",
     "Quartz": "quartz.com/",
     "Real Simple": "realsimple.com/",
-    "Vox": "vox.com/"
+    "Vox": "vox.com/",
+    "Mortgage Professional America": "mpamag.com/",
+    "Inside Intelligence":"emarketer.com/",
+    "TheRealDeal":"therealdeal.com/",
+    "National Mortgage Professional":"nationalmortgageprofessional.com/",
+    "The Business Journals":"bizjournals.com/",
+    "BankRate":"bankrate.com/",
+    "Millennial Money":"millennialmoney.com/",
+    "Time":"time.com/",
+    "Nasdaq":"nasdaq.com/",
+    "MSN":"msn.com/",
 }
 headers = {
     'Authorization': 'Bearer 244ff6660552870e5e427bdc2e34cb7e795ed249',
@@ -59,18 +83,23 @@ def shorten(url):
     return response.json()['id']
 
 def analyze(url):
-    article = Article(url.strip())
+    article = Article(url.strip(), languages='en', config=config)
     article.download()
     article.parse()
-    if ("bloomberg.com/" in url):
-        return Exception
+
     return article
 
 def source(url):
     outlet = ""
     for out, dmn in outlets.items():
         if dmn in url: outlet = out
-    if (outlet == ""): outlet = url.split(".")[1].capitalize()
+    if (outlet == ""): 
+        outlet = url.split("/")[2].split(".")
+        if (len(outlet) == 4): outlet = outlet[1].capitalize()
+        elif (len(outlet) == 3): outlet = outlet[1].capitalize()
+        elif (len(outlet) == 2): outlet = outlet[0].capitalize()
+        else: outlet = "[error]"
+    print(outlet)
     return outlet
         
 app = Flask(__name__)
@@ -86,14 +115,11 @@ def index():
 
 
 def main(links):
-    print(links)
     urls = links.splitlines()
-    print(urls)
     new = []
 
     for url in urls:
         print("pass=================================================")
-        print(url)
         print(url.strip())
         url = url.strip()
         bitly  = shorten(url)
