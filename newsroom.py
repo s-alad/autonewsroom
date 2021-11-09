@@ -87,6 +87,7 @@ def analyze(url):
     article.download()
     article.parse()
 
+    if (article.title == "Are you a robot?"): return Exception
     return article
 
 def source(url):
