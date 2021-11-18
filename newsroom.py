@@ -68,7 +68,7 @@ outlets = {
     "MSN":"msn.com/",
 }
 headers = {
-    'Authorization': 'Bearer 244ff6660552870e5e427bdc2e34cb7e795ed249',
+    'Authorization': '',
     'Content-Type': 'application/json',
 }
 
